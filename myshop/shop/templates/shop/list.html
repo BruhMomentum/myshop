@@ -1,0 +1,39 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in all_product %}
+        <div class="col">
+            <div class="card h-100">
+                {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.productname }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="No image" style="height: 200px; object-fit: cover;">
+                {% endif %}
+                
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.productname }}</h5>
+                    <p class="card-text">
+                        <strong>Компания:</strong> {{ item.company }}<br>
+                        <strong>Цена:</strong> {{ item.price }} руб.<br>
+                        <strong>В наличии:</strong> {{ item.productcount }} шт.
+                    </p>
+                    {% if item.isdiscounted %}
+                        <span class="badge bg-danger">Скидка
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <p>Товары не найдены</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
